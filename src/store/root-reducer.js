@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
+import searchReducer from '../components/Users/reducer';
 
-const rootReducer = combineReducers({});
+const rootReducer = searchReducer;
 
 export default rootReducer;

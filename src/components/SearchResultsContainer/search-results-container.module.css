@@ -1,0 +1,14 @@
+.searchResultsContainer{
+  margin: 3em;
+  
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.searchResultsContainer__userCard{
+  margin: 0 2em 2em 0;
+  width: 80%;
+  
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
