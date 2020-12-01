@@ -1,0 +1,22 @@
+.searchResultsContainer{
+  margin: 3em;
+  
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.searchResultsContainer__userCard{
+  margin: 0 2em 2em 0;
+  width: 80%;
+  
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.searchResultsContainer__userCount{}
+
+.searchResultsContainer__usersList{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}

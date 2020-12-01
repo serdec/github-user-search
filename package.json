@@ -11,8 +11,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@octokit/rest": "^18.0.9",
     "next": "10.0.3",
     "next-redux-wrapper": "^6.0.2",
+    "parse-link-header": "^1.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-redux": "^7.2.2",
@@ -32,6 +34,7 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.2.1",
     "riteway": "^6.2.1",
     "tap-nirvana": "^1.1.0",

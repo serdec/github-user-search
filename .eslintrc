@@ -6,7 +6,8 @@
     "node": true
   },
   "plugins": [
-    "react"
+    "react",
+    "react-hooks"
   ],
   "extends": [
     "eslint:recommended",
@@ -26,6 +27,8 @@
     "linebreak-style": [
       "error",
       "unix"
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
