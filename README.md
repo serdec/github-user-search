@@ -1,30 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is an implementation of the github user search api. A deployed version can be found at https://github-user-search-seven.vercel.app/
 
-## Getting Started
+## Description
 
-First, run the development server:
+Why does a user search another user on github? 
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Most likely she is interested in a repo she saw somewhere and she doesn't remember the name of the repo but remembers more or less the author.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+She might need to make more searches to refine her results. 
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+The application shows the search results in a way such that the user can get the most relavant details at first sight. The user doens't need to click around to get the search details
 
-## Learn More
+This differ from the [Github Search Page](https://github.com/search) where only the results' names are shown which makes it difficult to understand how popular (and therefore how likely) a result is.
 
-To learn more about Next.js, take a look at the following resources:
+## Implementation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Maintanability and easyness to extent it later on are the two key factors with which the application has been developed 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- TDD. TDD in fact helps achieve a high level of modularization and high trust in the code.
 
-## Deploy on Vercel
+- BEM. Each component has been modularized following a simil BEM approach.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Isolation. Isolation is another key factor priviledged in the development. It becomes most relevant when handling network requests.  They are managed by a single saga component that prevents the network logic from being scattered all over the code. The network layer is one step above the application layer, which is not aware of what happens at the network level.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Redux. Last but not least, Redux has been used as a state management component. Redux makes the overall application state and logic centralized and flexible for later modifications.
+ 

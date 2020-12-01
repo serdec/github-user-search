@@ -6,19 +6,27 @@
   flex-flow: row wrap;
 }
 
-.userCard__name{
-  margin: 2em;
+.userCard__details{
+  margin: 4em 1em;
+
+  flex: 1;
 }
 .userCard__profilePictureContainer{
   margin: 2em;
-  width: 15%;
+
+  flex: 1;
 }
 .userCard__profilePicture{
   max-width: 100%;
   max-height: 100%;
   border-radius: 50%;
 }
-.userCard__followers{
+
+.userCard__reposList{
   margin: 2em;
+
+  flex: 1;
 }
-.userCard__repos{}
+.userCard__repo{
+  margin: .5em;
+}

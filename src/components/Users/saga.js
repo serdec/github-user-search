@@ -1,20 +1,39 @@
 import { Octokit } from '@octokit/rest';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { createUser, createRepo, setUsers } from './reducer';
+import {
+  createUser,
+  createRepo,
+  setUsers,
+  setTotalCount,
+  setPages,
+  setLoading,
+} from './reducer';
+import parse from 'parse-link-header';
 
-export const getUsers_sagaAction = ({ q = '', page = 1 } = {}) => ({
+let octokit;
+
+export const initOctokit = (token = '') => {
+  octokit = new Octokit({ auth: token });
+};
+
+export const getUsers_sagaAction = ({
+  q = '',
+  page = 1,
+  per_page = 7,
+  sort = 'followers',
+} = {}) => ({
   type: getUsers_sagaAction.type,
   payload: {
     q,
     page,
+    per_page,
+    sort,
   },
 });
 getUsers_sagaAction.type = 'searchUsers/sagaAction/getUsers';
 
-const octokit = new Octokit();
-
 const getReposInfoForEachUser = (users) => {
-  let usersReposMeta = [];
+  let usersReposMeta;
   try {
     usersReposMeta = all(
       users.map((user) =>
@@ -31,7 +50,7 @@ const getReposInfoForEachUser = (users) => {
 };
 
 /*
- * update the list of users without repos info
+ * Update the list of users without repos info
  *
  * We use createRepo() so that if the github repo object ever changes
  * we don't need to change our object throughout our code, we can simply update
@@ -49,34 +68,86 @@ const updateUsersRepos = (users, usersReposMeta) =>
     return user;
   });
 
+const getUsersMeta = (res = {}) => {
+  let users = res.data.items;
+  let usersMeta;
+
+  try {
+    usersMeta = all(
+      users.map((user) =>
+        call(octokit.users.getByUsername, { username: user.login })
+      )
+    );
+  } catch (e) {
+    if (process.env.NODE_ENV === 'development') console.log(e);
+  }
+
+  return usersMeta;
+};
+const getTotalCountFromResponse = (res) => res.data.total_count;
+
+const getLinksFromResponse = (res) =>
+  res.headers.link ? parse(res.headers.link) : {};
+
 export function* getUsers_saga(action) {
   let users = [];
   try {
-    /* get users metadata from github */
-    const res = yield call(octokit.search.users, action.payload);
+    /*
+     * Let's put our application in a loading state. We might not want to display partial
+     * results that are later updated.
+     */
+    yield put(setLoading(true));
 
     /*
-     * get the list of users without metadata
+     * Get users metadata from github
+     */
+    const res = yield call(octokit.search.users, action.payload);
+
+    const total_count = getTotalCountFromResponse(res);
+    yield put(setTotalCount(total_count));
+
+    const pages = getLinksFromResponse(res);
+
+    /*
+     * Save current page
+     */
+    pages.current = { page: action.payload.page.toString() };
+    yield put(setPages(pages));
+
+    /*
+     * Get the list of users without metadata
      *
      * We use createUser() so that if the github user object ever changes
      * we don't need to change our object throughout our code, we can simply update
      * the createUser() function
      */
-    users = res.data.items.map((item) => createUser(item));
+    const usersMeta = yield getUsersMeta(res);
+    users = usersMeta.map((meta) => createUser(meta.data));
 
-    /* update users in the state */
+    /*
+     * Update users in the state
+     */
     yield put(setUsers(users));
 
-    /* get repos metadata from github */
+    /*
+     * Get repos metadata from github
+     */
     const usersReposMeta = yield getReposInfoForEachUser(users);
 
-    /* update repos for each user with useful info (repos names, stars etc) */
+    /*
+     * Update repos for each user with useful info (repos names, stars etc)
+     */
     users = updateUsersRepos(users, usersReposMeta);
 
-    /* update users in the state */
+    /*
+     * Update users in the state
+     * and set the loading state back to false
+     */
     yield put(setUsers(users));
+    yield put(setLoading(false));
   } catch (e) {
     if (process.env.NODE_ENV === 'development') console.log(e);
+    yield put(setLoading(false));
   }
 }
 

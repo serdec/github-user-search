@@ -4,9 +4,10 @@ import render from 'riteway/render-component';
 import match from 'riteway/match';
 import UserCard from './user-card';
 import styles from './user-card.module.css';
+import { createUser } from '../Users/reducer';
 
 describe('userCard', async (assert) => {
-  const createUserCard = ({ user = {}, className = '' } = {}) =>
+  const createUserCard = ({ user = createUser(), className = '' } = {}) =>
     render(<UserCard user={user} className={className} />);
   {
     const $ = createUserCard();

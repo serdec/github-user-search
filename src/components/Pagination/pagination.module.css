@@ -1,0 +1,22 @@
+.pagination{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.pagination__page{
+  margin: .2em;
+  border: none;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+}
+.pagination__page:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.pagination__page_selected{
+  background-color: rgb(25,140,255);
+  color: white;
+  border-radius: 50%;
+  
+}

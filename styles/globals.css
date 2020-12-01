@@ -6,7 +6,8 @@ body {
 }
 
 a {
-  color: inherit;
+  color: rgb(23, 140, 255);
+  font-weight: bold;
   text-decoration: none;
 }
 
