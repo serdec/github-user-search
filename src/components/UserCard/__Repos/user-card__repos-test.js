@@ -14,11 +14,11 @@ describe('userCard__repos', async (assert) => {
       given: 'no arguments',
       should: 'render the repos container',
       expected: 1,
-      actual: $(`.${styles.userCard__repos}`).length,
+      actual: $(`.${styles.userCard__reposList}`).length,
     });
   }
   {
-    const repos = [{ id: 1, name: 'example' }];
+    const repos = [{ id: 1, name: 'example', html_url: '' }];
     const $ = createUserCard__Repos({ repos });
     const contains = match($.html());
     assert({
