@@ -23,4 +23,26 @@ This differ from the [Github Search Page](https://github.com/search) where only 
 - Isolation. Isolation is another key factor priviledged in the development. It becomes most relevant when handling network requests.  They are managed by a single saga component that prevents the network logic from being scattered all over the code. The network layer is one step above the application layer, which is not aware of what happens at the network level.
 
 - Redux. Last but not least, Redux has been used as a state management component. Redux makes the overall application state and logic centralized and flexible for later modifications.
- 
+
+## Build & Run 
+
+Modify the *.env.local* file.
+
+**.env.local**
+
+```shell
+GITHUB_CLIENT_SECRET=<your git hub token>
+```
+
+```bash
+$ npm run build
+
+$ npm run start
+```
+
+## Test
+```bash
+$ npm run test
+```
+
+
