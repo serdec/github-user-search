@@ -16,7 +16,7 @@ This differ from the [Github Search Page](https://github.com/search) where only 
 
 - Maintanability and easyness to extent it later on are the two key factors with which the application has been developed 
 
-- TDD. TDD in fact helps achieve a high level of modularization and high trust in the code.
+- TDD. TDD helps achieving a high level of modularization and high trust in the code.
 
 - BEM. Each component has been modularized following a simil BEM approach.
 
